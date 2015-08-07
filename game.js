@@ -34,7 +34,7 @@ function Level(plan){
 		this.grid.push(gridline);
 	}
 
-	this.player = actors.filter(function(actor){
+	this.player = this.actors.filter(function(actor){
 		return actor.type == 'player';
 	})[0];
 	this.status = this.finishDelay = null;
@@ -70,7 +70,7 @@ function Player(pos){
 	this.size = new Vector(0.8, 1.5);
 	this.speed = new Vector(0, 0);
 }
-player.prototype.type = 'player';
+Player.prototype.type = 'player';
 
 function Lava(pos, ch){
 	this.pos = pos;
@@ -94,3 +94,4 @@ function Coin(pos){
 }
 
 Coin.prototype.type = 'coin';
+
