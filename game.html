@@ -3,13 +3,12 @@
 <title>GAME</title>
 <link rel='stylesheet' href='game.css'>
 <script type='text/javascript' src='game.js'></script>
+<script type="text/javascript" src='http://eloquentjavascript.net/code/game_levels.js'></script>
 
 </head>
 <body>
 <script type='text/javascript'>
-	var simpleLevel = new Level(simpleLevelPlan);
-	var display = new DOMDisplay(document.body, simpleLevel);
-
+	runGame(GAME_LEVELS, DOMDisplay);
 </script>
 
 
