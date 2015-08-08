@@ -72,6 +72,7 @@ function Player(pos){
 	this.size = new Vector(0.8, 1.5);
 	this.speed = new Vector(0, 0);
 }
+
 Player.prototype.type = 'player';
 
 function Lava(pos, ch){
@@ -79,9 +80,9 @@ function Lava(pos, ch){
 	this.size = new Vector(1, 1);
 	if (ch == '='){
 		this.speed = new Vector(2, 0);
-	}else if (ch == '|'){
+	} else if (ch == '|'){
 		this.speed = new Vector(0, 2);
-	}else if (ch == 'v'){
+	} else if (ch == 'v'){
 		this.speed = new Vector(0, 3);
 		this.repeatPos = pos;
 	}
@@ -132,7 +133,7 @@ DOMDisplay.prototype.drawBackground = function(){
 DOMDisplay.prototype.drawActors = function(){
 	var wrap = elt('div');
 	this.level.actors.forEach(function(actor){
-		var rect = wrap.appendChild(elt('div', 'actor' + actor.type));
+		var rect = wrap.appendChild(elt('div', 'actor ' + actor.type));
 		rect.style.width = actor.size.x * scale + 'px';
 		rect.style.height = actor.size.y * scale + 'px';
 		rect.style.left = actor.pos.x * scale + 'px';
@@ -148,4 +149,32 @@ DOMDisplay.prototype.drawFrame = function(){
 	this.wrap.className = 'game' + (this.level.status || '');
 	this.scrollPlayerIntoView();
 };
+
+DOMDisplay.prototype.scrollPlayerIntoView = function(){
+	var width = this.wrap.clientWidth;
+	var height = this.wrap.clientHeight;
+	var margin = width / 3;
+
+	//Viewport
+	var left = this.wrap.scrollLeft, right = left + width;
+	var top = this.wrap.scrollTop, bottom = top + height;
+	var player = this.level.player;
+	var center = player.pos.plus(player.size.times(0.5)).times(scale);
+	if (center.x < left + margin)
+		this.wrap.scrollLeft = center.x - margin;
+	else if (center.x > right - margin)
+		this.wrap.scrollLeft = center.x + margin - width;
+	else if (center.y < top + margin)
+		this.wrap.scrollTop = center.y - margin;
+	else if (center.y > bottom - margin)
+		this.wrap.scrollTop = center.y + margin - height;
+};
+
+DOMDisplay.prototype.clear = function(){
+	this.wrap.parentNode.removeChild(this.wrap);
+};
+
+
+
+
 
